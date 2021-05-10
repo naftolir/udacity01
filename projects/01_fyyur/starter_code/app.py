@@ -356,6 +356,15 @@ def edit_artist_submission(artist_id):
   form = ArtistForm(request.form)
 
   try:
+    artist.name = form.name.data
+    artist.city = form.city.data
+    artist.state = form.state.data
+    artist.website_link = form.website_link.data
+    artist.genres = list(form.genres.data)
+    artist.image_link = form.image_link.data
+    artist.facebook_link = form.facebook_link.data
+    artist.seeking_venue = True if 'seeking_venue' in request.form else False
+    artist.seeking_description = form.seeking_description.data
     db.session.commit()
   except ValueError as e:
     print(e)
@@ -384,7 +393,7 @@ def edit_venue_submission(venue_id):
     venue.image_link = form.image_link.data,
     venue.facebook_link = form.facebook_link.data,
     venue.genres = list(form.genres.data)
-    venue.seeking_talent = form.seeking_talent.data,
+    venue.seeking_talent = True if 'seeking_talent' in request.form else False
     venue.seeking_description = form.seeking_description.data
     db.session.commit()
   except ValueError as e:
